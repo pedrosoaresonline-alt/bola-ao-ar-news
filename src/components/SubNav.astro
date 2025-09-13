@@ -1,0 +1,60 @@
+---
+const sectionsMap = {
+  "/": [
+    { href: "/#destaques", label: "Destaques" },
+    { href: "/#ultimas", label: "Últimas" },
+    { href: "/rss.xml", label: "RSS" },
+  ],
+  "/competicoes": [
+    { href: "/competicoes#resultados", label: "Resultados" },
+    { href: "/competicoes#classificacoes", label: "Classificações" },
+    { href: "/competicoes#calendario", label: "Calendário" },
+  ],
+  "/jogadores": [
+    { href: "/jogadores#perfis", label: "Perfis" },
+    { href: "/jogadores#comparador", label: "Comparador" },
+    { href: "/jogadores#tops", label: "Top Jogadores" },
+  ],
+  "/estatisticas": [
+    { href: "/estatisticas#rankings", label: "Rankings" },
+    { href: "/estatisticas#avancadas", label: "Avançadas" },
+    { href: "/estatisticas#mvp", label: "MVPs" },
+  ],
+  "/multimedia": [
+    { href: "/multimedia#highlights", label: "Highlights" },
+    { href: "/multimedia#galeria", label: "Galeria" },
+    { href: "/multimedia#podcasts", label: "Podcasts" },
+  ],
+  "/comunidade": [
+    { href: "/comunidade#enquetes", label: "Enquetes" },
+    { href: "/comunidade#forum", label: "Fórum" },
+    { href: "/comunidade#fantasy", label: "Fantasy" },
+  ],
+};
+
+const path = Astro.url.pathname;
+// escolhe a chave que é prefixo do path atual (ex.: /jogadores/joao → /jogadores)
+const key = Object.keys(sectionsMap)
+  .filter((k) => path === k || (k !== "/" && path.startsWith(k)))
+  .sort((a, b) => b.length - a.length)[0];
+
+const items = key ? sectionsMap[key] : [];
+---
+{items.length ? (
+  <div class="bg-white/90 border-b border-zinc-200">
+    <div class="max-w-7xl mx-auto px-4 py-2">
+      <ul class="flex flex-wrap gap-2 text-sm">
+        {items.map((i) => (
+          <li>
+            <a
+              href={i.href}
+              class="inline-flex items-center px-3 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition"
+            >
+              {i.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+) : null}

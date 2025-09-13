@@ -1,0 +1,64 @@
+<nav style="background:#f97316;color:#fff;font-weight:600">
+  <div style="max-width:960px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;flex-wrap:wrap">
+    <a href="/" style="color:#fff;text-decoration:none">Início</a>
+    <a href="/competicoes" style="color:#fff;text-decoration:none">Competições</a>
+    <a href="/jogadores" style="color:#fff;text-decoration:none">Jogadores</a>
+    <a href="/estatisticas" style="color:#fff;text-decoration:none">Estatísticas</a>
+    <a href="/multimedia" style="color:#fff;text-decoration:none">Multimédia</a>
+    <a href="/comunidade" style="color:#fff;text-decoration:none">Comunidade</a>
+  </div>
+</nav>
+---
+const links = [
+  { href: "/", label: "Início" },
+  { href: "/competicoes", label: "Competições" },
+  { href: "/jogadores", label: "Jogadores" },
+  { href: "/estatisticas", label: "Estatísticas" },
+  { href: "/multimedia", label: "Multimédia" },
+  { href: "/comunidade", label: "Comunidade" },
+];
+const current = Astro.url.pathname;
+function isActive(href: string) {
+  // ativo em match exato ou prefixo (ex.: /jogadores/[slug])
+  return current === href || (href !== "/" && current.startsWith(href));
+}
+---
+<nav class="sticky top-0 z-40 bg-orange-500/95 backdrop-blur supports-[backdrop-filter]:bg-orange-500/80 shadow">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Mobile -->
+    <details class="sm:hidden">
+      <summary class="py-3 font-semibold text-white cursor-pointer select-none">Menu</summary>
+      <ul class="pb-3 space-y-2">
+        {links.map(l => (
+          <li>
+            <a
+              href={l.href}
+              class={`block px-3 py-2 rounded-md text-white hover:bg-orange-600 transition
+                      ${isActive(l.href) ? 'bg-orange-700 shadow-inner' : ''}`}
+            >{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </details>
+
+    <!-- Desktop -->
+    <ul class="hidden sm:flex items-center gap-2 py-2 font-semibold">
+      {links.map(l => (
+        <li>
+          <a
+            href={l.href}
+            class={`relative px-3 py-2 rounded-md text-white hover:bg-orange-600 transition
+                    ${isActive(l.href) ? 'bg-orange-700 shadow-inner' : ''}`}
+          >
+            {l.label}
+            <span class={`absolute left-3 right-3 -bottom-1 h-0.5 rounded
+                          ${isActive(l.href) ? 'bg-white/90' : 'bg-transparent'}`}></span>
+          </a>
+        </li>
+      ))}
+      <li class="ml-auto">
+        <a href="/rss.xml" class="px-3 py-2 rounded-md text-white/90 hover:text-white hover:bg-orange-600 transition">RSS</a>
+      </li>
+    </ul>
+  </div>
+</nav>

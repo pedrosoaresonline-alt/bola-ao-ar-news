@@ -1,0 +1,60 @@
+{
+  "$ref": "#/definitions/newsPosts",
+  "definitions": {
+    "newsPosts": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "excerpt": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "cover": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string",
+          "default": "Redação"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "date": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "guid": {
+          "type": "string"
+        },
+        "draft": {
+          "type": "boolean",
+          "default": false
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "excerpt",
+        "date",
+        "source",
+        "source_url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

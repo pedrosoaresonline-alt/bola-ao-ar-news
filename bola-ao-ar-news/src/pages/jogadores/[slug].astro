@@ -1,0 +1,30 @@
+---
+import Base from "~/layouts/Base.astro";
+import { getAllPlayers, getPlayer } from "~/lib/players";
+
+export async function getStaticPaths() {
+  const players = getAllPlayers();
+  return players.map(p => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const player = getPlayer(slug!);
+if (!player) throw new Error("Jogador não encontrado");
+---
+<Base title={`${player.name} — Bola ao Ar News`}>
+  <article class="grid md:grid-cols-[240px,1fr] gap-6">
+    <img src={player.photo} alt={player.name} class="w-60 h-60 object-cover rounded-xl shadow" />
+    <div>
+      <h1 class="text-3xl font-extrabold">{player.name}</h1>
+      <p class="opacity-80">{player.team} · {player.position}</p>
+      {player.stats && (
+        <ul class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <li class="bg-white rounded-xl p-3 shadow"><div class="text-sm opacity-60">PPG</div><div class="text-xl font-bold">{player.stats.ppg}</div></li>
+          <li class="bg-white rounded-xl p-3 shadow"><div class="text-sm opacity-60">RPG</div><div class="text-xl font-bold">{player.stats.rpg}</div></li>
+          <li class="bg-white rounded-xl p-3 shadow"><div class="text-sm opacity-60">APG</div><div class="text-xl font-bold">{player.stats.apg}</div></li>
+          <li class="bg-white rounded-xl p-3 shadow"><div class="text-sm opacity-60">PER</div><div class="text-xl font-bold">{player.stats.per}</div></li>
+        </ul>
+      )}
+    </div>
+  </article>
+</Base>
