@@ -23,6 +23,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
-  }
+    "preview": "astro preview",
+    "news:fetch": "node scripts/fetch-news.mjs"
+  },
+  "type": "module"
 }
